@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VEYRO – ein Community-Projekt rund um ein modernes Leitstellenspiel. Noch in Entwicklung. Werde Teil der Community.">
+    <meta name="theme-color" content="#d9232e">
+    <title>VEYRO – Dein Einsatz. Deine Leitstelle.</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        :root {
+            --red: #d9232e;
+            --red-dark: #b71924;
+            --red-light: #fff1f2;
+            --text: #20242a;
+            --muted: #747a81;
+            --border: #e5e7e9;
+            --surface: rgba(255,255,255,.92);
+            --surface-solid: #fff;
+            --bg: #f3f4f6;
+            --shadow: 0 20px 60px rgba(0,0,0,.10);
+            --shadow-red: 0 12px 30px rgba(217,35,46,.22);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 90% 0%, rgba(211,31,43,.12), transparent 28%),
+                linear-gradient(135deg, #fafafa, #eef0f2);
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button { font: inherit; }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: .25s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(255,255,255,.84);
+            border-bottom: 1px solid rgba(0,0,0,.06);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 30px rgba(0,0,0,.06);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 900;
+            letter-spacing: -.5px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            object-fit: contain;
+            background: linear-gradient(135deg, var(--red), var(--red-dark));
+            box-shadow: var(--shadow-red);
+        }
+
+        .brand-fallback {
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .brand-name { font-size: 20px; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            color: #555b61;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .nav-links a { transition: color .15s ease; }
+        .nav-links a:hover { color: var(--red); }
+
+        .nav-discord {
+            padding: 10px 15px;
+            border-radius: 10px;
+            background: var(--red);
+            color: white !important;
+            box-shadow: 0 7px 18px rgba(217,35,46,.18);
+        }
+
+        .nav-toggle {
+            display: none;
+            border: 0;
+            background: #fff;
+            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            box-shadow: 0 5px 18px rgba(0,0,0,.08);
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            min-height: 820px;
+            display: flex;
+            align-items: center;
+            padding: 130px 0 90px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            right: -250px;
+            top: 60px;
+            border-radius: 50%;
+            background: rgba(217,35,46,.07);
+            filter: blur(2px);
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 11px;
+            border: 1px solid #efc7ca;
+            border-radius: 9px;
+            background: rgba(255,255,255,.7);
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 850;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 0 4px rgba(217,35,46,.10);
+        }
+
+        .hero h1 {
+            margin: 20px 0 15px;
+            max-width: 680px;
+            font-size: clamp(48px, 7vw, 78px);
+            line-height: .98;
+            letter-spacing: -3.5px;
+            font-weight: 900;
+        }
+
+        .hero h1 span { color: var(--red); }
+
+        .hero-text {
+            max-width: 610px;
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.65;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 11px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 49px;
+            padding: 13px 19px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 850;
+            cursor: pointer;
+            transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+        }
+
+        .primary-button {
+            border: 0;
+            background: linear-gradient(135deg, var(--red), var(--red-dark));
+            color: white;
+            box-shadow: var(--shadow-red);
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(217,35,46,.27);
+        }
+
+        .secondary-button {
+            border: 1px solid #d9dcdf;
+            background: rgba(255,255,255,.75);
+            color: #34393f;
+        }
+
+        .secondary-button:hover {
+            transform: translateY(-2px);
+            background: white;
+        }
+
+        .hero-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            color: #91969b;
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        /* HERO MOCKUP */
+        .dashboard-wrap {
+            position: relative;
+            perspective: 1200px;
+        }
+
+        .dashboard {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,.08);
+            border-radius: 24px;
+            background: rgba(255,255,255,.94);
+            box-shadow: 0 35px 90px rgba(0,0,0,.17);
+            transform: rotateY(-5deg) rotateX(2deg);
+            transition: transform .5s ease;
+        }
+
+        .dashboard:hover { transform: rotateY(0) rotateX(0); }
+
+        .dashboard-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid #eceef0;
+        }
+
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .mini-icon {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--red), var(--red-dark));
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .online {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #288044;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .online i {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #38a169;
+        }
+
+        .map {
+            position: relative;
+            height: 390px;
+            background:
+                linear-gradient(30deg, transparent 47%, rgba(255,255,255,.7) 48%, rgba(255,255,255,.7) 51%, transparent 52%),
+                linear-gradient(150deg, transparent 48%, rgba(255,255,255,.65) 49%, rgba(255,255,255,.65) 51%, transparent 52%),
+                #dfe3e5;
+            background-size: 130px 130px, 160px 160px, auto;
+        }
+
+        .map::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(105deg, transparent 35%, rgba(194,199,202,.8) 35.5%, rgba(194,199,202,.8) 37%, transparent 37.5%),
+                linear-gradient(10deg, transparent 61%, rgba(194,199,202,.8) 61.5%, rgba(194,199,202,.8) 63%, transparent 63.5%);
+            opacity: .75;
+        }
+
+        .map-road {
+            position: absolute;
+            z-index: 2;
+            height: 5px;
+            border-radius: 99px;
+            background: rgba(255,255,255,.85);
+            box-shadow: 0 1px 2px rgba(0,0,0,.08);
+            transform: rotate(-24deg);
+        }
+
+        .road-1 { width: 125%; left: -15%; top: 45%; }
+        .road-2 { width: 100%; left: 10%; top: 63%; transform: rotate(18deg); }
+        .road-3 { width: 80%; left: 28%; top: 25%; transform: rotate(72deg); }
+
+        .map-marker {
+            position: absolute;
+            z-index: 5;
+            display: grid;
+            place-items: center;
+            width: 31px;
+            height: 31px;
+            border: 3px solid white;
+            border-radius: 50%;
+            color: white;
+            font-size: 9px;
+            font-weight: 900;
+            box-shadow: 0 4px 10px rgba(0,0,0,.3);
+        }
+
+        .fire { background: #c62828; }
+        .rescue { background: #1565c0; }
+
+        .m1 { left: 24%; top: 31%; }
+        .m2 { left: 63%; top: 48%; }
+        .m3 { left: 45%; top: 71%; }
+        .m4 { left: 76%; top: 25%; }
+
+        .incident {
+            position: absolute;
+            z-index: 6;
+            left: 48%;
+            top: 53%;
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            border: 4px solid white;
+            border-radius: 50%;
+            background: #ff9800;
+            color: white;
+            font-weight: 900;
+            box-shadow: 0 4px 12px rgba(0,0,0,.32);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { box-shadow: 0 4px 12px rgba(0,0,0,.32), 0 0 0 0 rgba(255,152,0,.28); }
+            50% { box-shadow: 0 4px 12px rgba(0,0,0,.32), 0 0 0 11px rgba(255,152,0,0); }
+        }
+
+        .dashboard-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 13px;
+            background: #fafbfc;
+        }
+
+        .dash-card {
+            padding: 12px;
+            border: 1px solid #e4e6e8;
+            border-radius: 11px;
+            background: white;
+        }
+
+        .dash-card small {
+            display: block;
+            margin-bottom: 5px;
+            color: #91969b;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .dash-card strong { font-size: 12px; }
+
+        /* SECTIONS */
+        section { padding: 105px 0; }
+
+        .section-header {
+            max-width: 680px;
+            margin-bottom: 42px;
+        }
+
+        .section-kicker {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 850;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            margin: 0 0 12px;
+            font-size: clamp(32px, 5vw, 48px);
+            line-height: 1.05;
+            letter-spacing: -1.8px;
+        }
+
+        .section-header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .white-section { background: rgba(255,255,255,.66); }
+
+        /* FEATURES */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .feature-card {
+            position: relative;
+            padding: 24px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 17px;
+            background: rgba(255,255,255,.88);
+            box-shadow: 0 8px 25px rgba(0,0,0,.045);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 38px rgba(0,0,0,.09);
+        }
+
+        .feature-icon {
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            margin-bottom: 19px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #e52b36, #b71924);
+            color: white;
+            font-size: 17px;
+            font-weight: 900;
+            box-shadow: 0 8px 18px rgba(217,35,46,.2);
+        }
+
+        .feature-card h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        /* COMMUNITY */
+        .community-grid {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .community-panel {
+            padding: 30px;
+            border: 1px solid #e3e5e8;
+            border-radius: 21px;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            box-shadow: var(--shadow);
+        }
+
+        .community-row {
+            display: flex;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid #eceef0;
+        }
+
+        .community-row:last-child { border-bottom: 0; }
+
+        .community-row-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 39px;
+            width: 39px;
+            height: 39px;
+            border-radius: 11px;
+            background: var(--red-light);
+            color: var(--red);
+            font-weight: 900;
+        }
+
+        .community-row strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .community-row span {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .quote {
+            position: relative;
+            padding: 30px;
+            border-radius: 21px;
+            background: #25292e;
+            color: white;
+            overflow: hidden;
+        }
+
+        .quote::after {
+            content: "VEYRO";
+            position: absolute;
+            right: -10px;
+            bottom: -40px;
+            color: rgba(255,255,255,.035);
+            font-size: 105px;
+            font-weight: 900;
+            letter-spacing: -7px;
+        }
+
+        .quote-mark {
+            color: var(--red);
+            font-size: 40px;
+            line-height: .7;
+        }
+
+        .quote p {
+            position: relative;
+            z-index: 2;
+            margin: 15px 0 22px;
+            max-width: 520px;
+            font-size: 21px;
+            line-height: 1.45;
+            font-weight: 750;
+            letter-spacing: -.4px;
+        }
+
+        .quote small {
+            position: relative;
+            z-index: 2;
+            color: #aeb3b8;
+            font-size: 11px;
+        }
+
+        /* STATUS */
+        .status-section {
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        .status-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+            border: 1px solid #edc6c9;
+            border-radius: 21px;
+            background: linear-gradient(135deg, #fff8f8, #fff);
+            box-shadow: 0 15px 40px rgba(217,35,46,.07);
+        }
+
+        .status-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 8px;
+            color: #ad2029;
+            font-size: 10px;
+            font-weight: 850;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .status-label::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+        }
+
+        .status-card h3 {
+            margin: 0 0 6px;
+            font-size: 22px;
+        }
+
+        .status-card p {
+            margin: 0;
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta {
+            position: relative;
+            padding: 100px 0;
+            background: #25292e;
+            color: white;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: "";
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            right: -160px;
+            top: -170px;
+            border-radius: 50%;
+            background: rgba(217,35,46,.17);
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .cta h2 {
+            margin: 0 auto 14px;
+            max-width: 720px;
+            font-size: clamp(34px, 5vw, 54px);
+            letter-spacing: -2px;
+            line-height: 1.05;
+        }
+
+        .cta p {
+            max-width: 620px;
+            margin: 0 auto 28px;
+            color: #aeb3b8;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cta .secondary-button {
+            border-color: #4a4f54;
+            background: rgba(255,255,255,.06);
+            color: white;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 28px 0;
+            background: #1d2024;
+            color: #858b91;
+            font-size: 11px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: white;
+            font-weight: 850;
+        }
+
+        .footer-brand .brand-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            box-shadow: none;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .footer-links a:hover { color: white; }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity .65s ease, transform .65s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero-grid,
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 130px;
+            }
+
+            .dashboard-wrap {
+                max-width: 650px;
+                width: 100%;
+                margin: 10px auto 0;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 680px) {
+            .container { width: min(100% - 30px, 1120px); }
+
+            .nav-links {
+                position: absolute;
+                top: 62px;
+                left: 15px;
+                right: 15px;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+                padding: 10px;
+                border: 1px solid #e5e7e9;
+                border-radius: 14px;
+                background: rgba(255,255,255,.96);
+                box-shadow: 0 15px 35px rgba(0,0,0,.12);
+                backdrop-filter: blur(15px);
+            }
+
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 12px; border-radius: 9px; }
+            .nav-links a:hover { background: #f6f7f8; }
+            .nav-discord { text-align: center; }
+
+            .nav-toggle {
+                display: grid;
+                place-items: center;
+                font-size: 19px;
+            }
+
+            .hero {
+                padding: 110px 0 65px;
+            }
+
+            .hero h1 {
+                font-size: clamp(43px, 14vw, 64px);
+                letter-spacing: -2.7px;
+            }
+
+            .hero-text { font-size: 15px; }
+
+            .hero-actions > * {
+                width: 100%;
+            }
+
+            .dashboard {
+                transform: none;
+                border-radius: 18px;
+            }
+
+            .map { height: 300px; }
+
+            section { padding: 75px 0; }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .community-grid { gap: 20px; }
+
+            .status-card {
+                grid-template-columns: 1fr;
+                padding: 23px;
+            }
+
+            .status-card .primary-button { width: 100%; }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links { flex-wrap: wrap; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    
+/* --- VEYRO depth-focused incident preview --- */
+.hero h1 span { color: var(--red); }
+.incident-preview {
+  background: rgba(255,255,255,.94);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(24,30,38,.12);
+  overflow: hidden;
+}
+.incident-top {
+  padding: 22px 24px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  border-bottom:1px solid var(--border);
+}
+.incident-top h3 { margin:6px 0 5px; font-size:18px; }
+.incident-top p { margin:0; color:var(--muted); font-size:13px; }
+.incident-status {
+  padding:7px 10px;
+  border-radius:999px;
+  background:#fff0f1;
+  color:var(--red);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+.incident-layout { display:grid; grid-template-columns:1.05fr .95fr; min-height:370px; }
+.incident-scene {
+  position:relative;
+  overflow:hidden;
+  background:#e9ecef;
+  min-height:370px;
+}
+.scene-grid {
+  position:absolute; inset:0;
+  background-image:linear-gradient(rgba(32,36,42,.045) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(32,36,42,.045) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.street-line {
+  position:absolute; left:-8%; right:-8%; top:52%;
+  height:42px; transform:rotate(-12deg);
+  background:#d5d8db;
+  border-top:1px solid #c8ccd0; border-bottom:1px solid #c8ccd0;
+}
+.building {
+  position:absolute; background:#f8f9fa; border:1px solid #c7cbd0;
+  box-shadow:0 12px 24px rgba(20,25,30,.08);
+  border-radius:6px; width:125px; height:92px;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:10px; color:#7a8087; font-size:9px; font-weight:800;
+}
+.building-a { left:28%; top:24%; transform:rotate(-5deg); }
+.building-b { left:56%; top:53%; width:100px; height:70px; transform:rotate(8deg); }
+.building-a b {
+  width:20px; height:20px; border-radius:50%; background:var(--red); color:white;
+  display:grid; place-items:center; font-size:12px;
+  box-shadow:0 0 0 8px rgba(217,35,46,.12);
+}
+.scene-point { position:absolute; width:12px; height:12px; border-radius:50%; box-shadow:0 0 0 6px rgba(255,255,255,.7); }
+.point-red { left:42%; top:39%; background:var(--red); }
+.point-blue { left:67%; top:64%; background:#3b82f6; }
+.scene-label {
+  position:absolute; font-size:9px; font-weight:800; letter-spacing:.08em;
+  background:rgba(255,255,255,.9); border:1px solid var(--border);
+  padding:6px 8px; border-radius:6px; box-shadow:0 5px 15px rgba(0,0,0,.07);
+}
+.label-fire { left:47%; top:30%; color:var(--red); }
+.label-access { left:70%; top:69%; color:#4b5563; }
+.incident-actions { padding:20px; background:#fbfbfc; }
+.action-head { display:flex; justify-content:space-between; margin-bottom:10px; font-weight:800; }
+.action-head small { color:var(--muted); font-weight:700; }
+.action {
+  display:grid; grid-template-columns:32px 1fr auto; gap:10px; align-items:center;
+  padding:11px 10px; border:1px solid var(--border); border-radius:12px;
+  background:#fff; margin-top:8px; transition:.2s ease;
+}
+.action:hover { transform:translateY(-1px); box-shadow:0 8px 18px rgba(20,25,30,.06); }
+.action-icon { width:30px; height:30px; display:grid; place-items:center; border-radius:8px; background:#f0f1f3; font-size:9px; font-weight:900; color:#697078; }
+.action strong { display:block; font-size:12px; }
+.action small { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+.action i { font-style:normal; font-size:9px; font-weight:800; color:#7b8289; }
+.action.active .action-icon { background:#fff0f1; color:var(--red); }
+.action.active i { color:var(--red); }
+.detail-note {
+  display:flex; gap:9px; margin-top:12px; padding:11px; border-radius:10px;
+  background:#f4f5f6; border:1px solid var(--border);
+}
+.detail-note span { width:20px; height:20px; border-radius:50%; background:var(--red); color:#fff; display:grid; place-items:center; font-weight:900; font-size:11px; flex:none; }
+.detail-note p { margin:0; font-size:10px; line-height:1.5; color:var(--muted); }
+.detail-note strong { color:var(--text); }
+
+.depth-section { background:#f7f8f9; }
+.depth-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:42px; }
+.depth-card {
+  position:relative; padding:28px; background:#fff; border:1px solid var(--border);
+  border-radius:18px; box-shadow:0 10px 30px rgba(20,25,30,.05);
+}
+.depth-main { grid-column:span 2; display:grid; grid-template-columns:70px 1fr; gap:10px 20px; }
+.depth-number { color:var(--red); font-size:11px; font-weight:900; letter-spacing:.1em; }
+.depth-card h3 { margin:0 0 10px; font-size:20px; }
+.depth-card p { color:var(--muted); line-height:1.7; margin:0; }
+.capability-list { grid-column:2; display:flex; flex-wrap:wrap; gap:7px; margin-top:6px; }
+.capability-list span { background:#f1f2f4; border:1px solid #e1e3e6; border-radius:999px; padding:7px 10px; font-size:10px; font-weight:800; color:#555c63; }
+
+@media (max-width: 760px) {
+  .incident-layout { grid-template-columns:1fr; }
+  .incident-scene { min-height:270px; }
+  .depth-grid { grid-template-columns:1fr; }
+  .depth-main { grid-column:auto; display:block; }
+  .depth-main .depth-number { display:block; margin-bottom:12px; }
+  .capability-list { margin-top:20px; }
+}
+
+
+/* --- Product / UI showcase --- */
+.product-showcase { background:#fff; }
+.control-preview {
+  position:relative;
+  min-height:620px;
+  margin-top:48px;
+  border:1px solid var(--border);
+  border-radius:26px;
+  overflow:hidden;
+  background:#e9ecef;
+  box-shadow:0 25px 70px rgba(20,25,30,.12);
+}
+.control-map {
+  position:absolute; inset:0;
+  overflow:hidden;
+  background:linear-gradient(135deg,#e8ebed,#dfe3e5);
+}
+.map-grid {
+  position:absolute; inset:0;
+  background-image:linear-gradient(rgba(32,36,42,.055) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(32,36,42,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.map-road {
+  position:absolute; background:#d1d5d8; border:1px solid #c5c9cc;
+  box-shadow:0 2px 5px rgba(0,0,0,.04);
+}
+.road-1 { width:120%; height:55px; left:-10%; top:48%; transform:rotate(-12deg); }
+.road-2 { width:70%; height:42px; right:-5%; top:22%; transform:rotate(25deg); }
+.map-block { position:absolute; background:#f5f6f7; border:1px solid #d0d4d7; border-radius:5px; }
+.block-1 { width:180px;height:120px;left:8%;top:12%;transform:rotate(-7deg); }
+.block-2 { width:150px;height:100px;left:50%;top:10%;transform:rotate(5deg); }
+.block-3 { width:210px;height:135px;right:6%;bottom:10%;transform:rotate(-4deg); }
+.station {
+  position:absolute; z-index:2; display:flex; align-items:center; gap:8px;
+  padding:7px 9px; background:rgba(255,255,255,.94); border:1px solid #d9dde0;
+  border-radius:9px; box-shadow:0 7px 18px rgba(20,25,30,.09); font-size:9px; font-weight:800;
+}
+.station b { display:grid;place-items:center;width:22px;height:22px;border-radius:6px;background:#eef0f2;color:#626970;font-size:8px; }
+.station span { color:#626970; }
+.station-a { left:8%; bottom:18%; }
+.station-b { right:13%; top:33%; }
+.station-c { left:36%; bottom:8%; }
+.map-incident {
+  position:absolute; z-index:3; left:45%; top:42%; display:flex; flex-direction:column;
+  align-items:center; gap:4px;
+}
+.map-incident span {
+  display:grid; place-items:center; width:42px;height:42px;border-radius:50%;
+  background:var(--red); color:#fff; font-size:18px; font-weight:900;
+  box-shadow:0 0 0 10px rgba(217,35,46,.12),0 10px 25px rgba(217,35,46,.25);
+}
+.map-incident strong { background:#fff;padding:5px 7px;border-radius:6px;font-size:10px;box-shadow:0 5px 15px rgba(0,0,0,.08); }
+.map-incident small { color:#70777d;font-size:9px;font-weight:800; }
+.map-caption { position:absolute; top:22px; left:24px; z-index:2; display:flex;flex-direction:column; }
+.map-caption span { font-size:9px;font-weight:900;letter-spacing:.12em;color:#747a81; }
+.map-caption strong { margin-top:3px;font-size:16px; }
+
+.control-window {
+  position:absolute; z-index:5; width:min(560px,52%); left:9%; top:50%; transform:translateY(-50%);
+  background:rgba(255,255,255,.96); border:1px solid rgba(255,255,255,.8); border-radius:22px;
+  box-shadow:0 25px 65px rgba(25,30,35,.22); backdrop-filter:blur(15px);
+}
+.window-head { display:flex;align-items:center;gap:15px;padding:20px 22px;border-bottom:1px solid var(--border); }
+.window-icon { flex:none;width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#ff9d16,#ed7800);display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 9px 20px rgba(240,125,0,.2); }
+.window-head span { color:#9aa0a6;font-size:9px;font-weight:900;letter-spacing:.1em; }
+.window-head h3 { margin:3px 0 3px;font-size:22px; }
+.window-head p { margin:0;color:#858c93;font-size:12px; }
+.window-head button { margin-left:auto;border:0;background:#f0f1f2;color:#697178;width:38px;height:38px;border-radius:11px;font-size:22px; }
+.window-tabs { display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border); }
+.window-tabs > * { padding:15px 8px;text-align:center;font-size:11px;color:#8a9197; }
+.window-tabs b { color:#30363c;border-bottom:3px solid var(--red); }
+.window-body { padding:20px 22px 22px; }
+.window-section-title { font-size:17px;font-weight:850; }
+.window-section-title.compact { margin-top:18px; }
+.window-body > p { margin:6px 0 16px;color:#81888f;font-size:12px;line-height:1.5; }
+.mini-stats { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+.mini-stats div { padding:12px;border:1px solid var(--border);border-radius:11px;background:#fafbfb; }
+.mini-stats small { display:block;color:#979da3;font-size:8px;font-weight:900; }
+.mini-stats strong { display:block;margin-top:4px;font-size:11px; }
+.vehicle-row { display:grid;grid-template-columns:18px 55px 1fr;align-items:center;gap:8px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;margin-top:7px;background:#fff; }
+.vehicle-row i { width:17px;height:17px;border:1px solid #aeb4ba;border-radius:3px; }
+.vehicle-row strong { font-size:11px; }
+.vehicle-row small { color:#8b9298;font-size:9px;font-weight:700; }
+.alarm-button { margin-top:13px;padding:12px;text-align:center;background:var(--red);color:#fff;border-radius:10px;font-size:12px;font-weight:850;box-shadow:0 9px 22px rgba(217,35,46,.2); }
+
+.screenshot-grid { display:grid;gap:22px;margin-top:42px; }
+.screen-card {
+  display:grid;grid-template-columns:.85fr 1.15fr;align-items:center;gap:45px;
+  padding:34px;border:1px solid var(--border);border-radius:22px;background:#f8f9fa;
+  overflow:hidden;
+}
+.screen-card.reverse { grid-template-columns:1.15fr .85fr; }
+.screen-card.reverse .screen-copy { order:2; }
+.screen-copy span { color:var(--red);font-size:9px;font-weight:900;letter-spacing:.12em; }
+.screen-copy h3 { margin:8px 0 10px;font-size:24px;line-height:1.15; }
+.screen-copy p { margin:0;color:var(--muted);font-size:13px;line-height:1.7;max-width:430px; }
+.screen-frame {
+  min-height:410px;display:flex;align-items:center;justify-content:center;padding:14px;
+  background:#e6e8ea;border:1px solid #d8dcdf;border-radius:18px;
+  box-shadow:inset 0 1px rgba(255,255,255,.8),0 15px 35px rgba(20,25,30,.08);
+}
+.screen-frame img { display:block;max-width:100%;max-height:600px;width:auto;height:auto;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,.14); }
+
+@media (max-width: 900px) {
+  .control-preview { min-height:760px; }
+  .control-map { height:100%; }
+  .control-window { width:min(600px,82%); left:9%; }
+  .screen-card,.screen-card.reverse { grid-template-columns:1fr;gap:25px; }
+  .screen-card.reverse .screen-copy { order:0; }
+}
+@media (max-width: 600px) {
+  .control-preview { min-height:720px; }
+  .control-window { width:92%;left:4%;top:53%; }
+  .map-block { opacity:.55; }
+  .station { transform:scale(.85); transform-origin:center; }
+  .station-b { right:3%; }
+  .station-c { left:12%; }
+  .window-head { padding:16px; }
+  .window-body { padding:16px; }
+  .mini-stats { grid-template-columns:1fr; }
+  .vehicle-row { grid-template-columns:18px 50px 1fr; }
+  .screen-card { padding:20px; }
+  .screen-frame { min-height:280px; }
+}
+
+</style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="#start" aria-label="VEYRO Startseite">
+                <!-- Lege dein Logo als assets/veyro-logo.png ab -->
+                <img class="brand-logo" src="assets/veyro-logo.png" alt="VEYRO Logo"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+                <span class="brand-logo brand-fallback" style="display:none;">V</span>
+                <span class="brand-name">VEYRO</span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#idee">Die Idee</a>
+                <a href="#features">Features</a>
+                <a href="#community">Community</a>
+                <a href="#status">Entwicklung</a>
+                <a class="nav-discord" href="https://discord.gg/DEIN-SERVER" target="_blank" rel="noopener">Discord</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="start">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="reveal">
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Community-Projekt · In Entwicklung
+                    </div>
+
+                    <h1>Deine Leitstelle.<br><span>Dein Einsatz.</span></h1>
+
+                    <p class="hero-text">
+                        VEYRO ist ein modernes Leitstellenspiel, das gemeinsam mit einer
+                        Community entsteht. Baue deine Wachen auf, verwalte Fahrzeuge,
+                        bearbeite Detaillierte Einsatzlagen und triff die richtigen Entscheidungen – direkt
+                        aus deiner Leitstelle.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="primary-button" href="https://discord.gg/DEIN-SERVER" target="_blank" rel="noopener">
+                            Discord beitreten <span>→</span>
+                        </a>
+                        <a class="secondary-button" href="#idee">
+                            VEYRO entdecken
+                        </a>
+                    </div>
+
+                    <div class="hero-note">
+                        <span>●</span>
+                        Noch nicht veröffentlicht – Entwicklung läuft
+                    </div>
+                </div>
+
+                <!-- Visuelle Spielvorschau -->
+                <div class="dashboard-wrap reveal">
+                    <div class="dashboard">
+                        <div class="dashboard-top">
+                            <div class="dashboard-title">
+                                <div class="mini-icon">V</div>
+                                VEYRO Leitstelle
+                            </div>
+                            <div class="online"><i></i> System bereit</div>
+                        </div>
+
+                        <div class="map">
+                            <div class="map-road road-1"></div>
+                            <div class="map-road road-2"></div>
+                            <div class="map-road road-3"></div>
+
+                            <div class="map-marker fire m1">FW</div>
+                            <div class="map-marker rescue m2">RD</div>
+                            <div class="map-marker fire m3">FW</div>
+                            <div class="map-marker rescue m4">RD</div>
+                            <div class="incident">!</div>
+                        </div>
+
+                        <div class="dashboard-bottom">
+                            <div class="dash-card">
+                                <small>Aktueller Einsatz</small>
+                                <strong>Verkehrsunfall</strong>
+                            </div>
+                            <div class="dash-card">
+                                <small>Alarmierte Einheiten</small>
+                                <strong>LF 20 · RTW · NEF</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section class="product-showcase section" id="einblicke">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">EINBLICKE IN VEYRO</span>
+      <h2>Die Tiefe steckt im Detail.</h2>
+      <p>Die Oberfläche soll nicht nur gut aussehen. Sie soll sichtbar machen, was einen Einsatz wirklich ausmacht: Lage, Fahrzeuge und konkrete Maßnahmen.</p>
+    </div>
+
+    <div class="control-preview reveal">
+      <div class="control-map">
+        <div class="map-grid"></div>
+        <div class="map-road road-1"></div>
+        <div class="map-road road-2"></div>
+        <div class="map-block block-1"></div>
+        <div class="map-block block-2"></div>
+        <div class="map-block block-3"></div>
+
+        <div class="station station-a"><b>FW</b><span>Wache Nord</span></div>
+        <div class="station station-b"><b>FW</b><span>Wache Süd</span></div>
+        <div class="station station-c"><b>RW</b><span>Rettungswache</span></div>
+
+        <div class="map-incident">
+          <span>!</span>
+          <strong>Heckenbrand</strong>
+          <small>0.76 km</small>
+        </div>
+
+        <div class="map-caption">
+          <span>LEITSTELLE</span>
+          <strong>Einsatzübersicht</strong>
+        </div>
+      </div>
+
+      <div class="control-window">
+        <div class="window-head">
+          <div class="window-icon">!</div>
+          <div>
+            <span>EINSATZ</span>
+            <h3>Heckenbrand</h3>
+            <p>Einsatz wartet auf Alarmierung.</p>
+          </div>
+          <button aria-label="Fenster schließen">×</button>
+        </div>
+
+        <div class="window-tabs">
+          <b>◉ &nbsp; Übersicht</b>
+          <span>▣ &nbsp; Fahrzeuge</span>
+          <span>♧ &nbsp; Maßnahmen</span>
+        </div>
+
+        <div class="window-body">
+          <div class="window-section-title">Lage</div>
+          <p>Heckenbrand. Ein Löschfahrzeug wird zur Brandbekämpfung benötigt.</p>
+
+          <div class="mini-stats">
+            <div><small>ENTFERNUNG</small><strong>0.76 km</strong></div>
+            <div><small>EINSATZART</small><strong>Heckenbrand</strong></div>
+            <div><small>STATUS</small><strong>Bereit</strong></div>
+          </div>
+
+          <div class="window-section-title compact">Fahrzeuge alarmieren</div>
+          <div class="vehicle-row"><i></i><strong>LF 10</strong><small>FF Lü/Vo – LF 10</small></div>
+          <div class="vehicle-row"><i></i><strong>ELW</strong><small>FF Lü/Vo – ELW</small></div>
+          <div class="vehicle-row"><i></i><strong>TLF 4000</strong><small>FF Lü/Vo – TLF 4000</small></div>
+          <div class="alarm-button">Alarmieren</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="screenshot-grid">
+      <article class="screen-card reveal">
+        <div class="screen-copy">
+          <span>01 · EINSATZ</span>
+          <h3>Erst die Lage. Dann die Entscheidung.</h3>
+          <p>Die Einsatzansicht zeigt nicht nur einen Einsatzpunkt. Sie gibt dir die Informationen, die du für deine erste Entscheidung brauchst.</p>
+        </div>
+        <div class="screen-frame">
+          <img src="assets/veyro-einsatz.png" alt="VEYRO Einsatzansicht mit Heckenbrand und Fahrzeugauswahl" loading="lazy">
+        </div>
+      </article>
+
+      <article class="screen-card reverse reveal">
+        <div class="screen-copy">
+          <span>02 · MASSNAHMEN</span>
+          <h3>Ein Fahrzeug kann mehr als nur ankommen.</h3>
+          <p>Vor Ort entscheidest du, welche konkrete Maßnahme durchgeführt wird – und bei manchen Maßnahmen sogar, welches Verfahren zum Einsatz kommt.</p>
+        </div>
+        <div class="screen-frame">
+          <img src="assets/veyro-massnahmen.png" alt="VEYRO Maßnahmenansicht des LF 20 mit verschiedenen Löschverfahren" loading="lazy">
+        </div>
+      </article>
+
+      <article class="screen-card reveal">
+        <div class="screen-copy">
+          <span>03 · FAHRZEUGSTEUERUNG</span>
+          <h3>Details, die Entscheidungen möglich machen.</h3>
+          <p>Wassertank, Ausstattung und verfügbare Maßnahmen sind Teil des Fahrzeugs – nicht nur dekorative Informationen.</p>
+        </div>
+        <div class="screen-frame">
+          <img src="assets/veyro-fahrzeug.png" alt="VEYRO Fahrzeugsteuerung des LF 20" loading="lazy">
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+        <!-- IDEE -->
+        <section class="white-section" id="idee">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-kicker">Die Idee hinter VEYRO</span>
+                    <h2>Ein Leitstellenspiel, das mit seiner Community wächst.</h2>
+                    <p>
+                        VEYRO soll nicht einfach nur ein weiteres Spiel sein. Die Idee ist,
+                        eine Plattform zu schaffen, bei der Spieler, Entwickler und
+                        Interessierte gemeinsam an einer modernen Leitstellen-Erfahrung
+                        arbeiten.
+                    </p>
+                </div>
+
+                <div class="feature-grid" id="features">
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">⌖</div>
+                        <h3>Deine Leitstelle</h3>
+                        <p>
+                            Übernimm die Kontrolle und koordiniere Detaillierte Einsatzlagen aus einer
+                            übersichtlichen, modernen Leitstellen-Oberfläche.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">⚠</div>
+                        <h3>Realistische Detaillierte Einsatzlagen</h3>
+                        <p>
+                            Von alltäglichen Notfällen bis zu größeren Einsatzlagen:
+                            Entscheidungen sollen einen echten Unterschied machen.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">▣</div>
+                        <h3>Fahrzeuge mit Fähigkeiten</h3>
+                        <p>
+                            Baue deine Infrastruktur auf, stelle Fahrzeuge bereit und
+                            entwickle deine eigene Einsatzstrategie.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">→</div>
+                        <h3>Maßnahmen & Entscheidungen</h3>
+                        <p>
+                            Alarmiere die passenden Einheiten, koordiniere Maßnahmen und
+                            behalte auch bei komplexen Lagen den Überblick.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">◎</div>
+                        <h3>Moderne Oberfläche</h3>
+                        <p>
+                            Klare Informationen, wenig Ablenkung und ein Interface, das
+                            sich anfühlt wie eine echte digitale Leitstelle.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">♥</div>
+                        <h3>Community zuerst</h3>
+                        <p>
+                            Feedback, Ideen und Diskussionen sollen ein wichtiger Teil
+                            der Entwicklung von VEYRO sein.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY -->
+        <section id="community">
+            <div class="container community-grid">
+                <div class="reveal">
+                    <div class="section-header">
+                        <span class="section-kicker">Community-Projekt</span>
+                        <h2>Nicht nur zuschauen. Mitgestalten.</h2>
+                        <p>
+                            VEYRO befindet sich noch in der Entwicklung. Genau deshalb ist
+                            jetzt der richtige Zeitpunkt, Teil der Community zu werden.
+                        </p>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a class="primary-button" href="https://discord.gg/DEIN-SERVER" target="_blank" rel="noopener">
+                            Zum Discord <span>→</span>
+                        </a>
+                        <a class="secondary-button" href="https://instagram.com/DEIN-ACCOUNT" target="_blank" rel="noopener">
+                            Socials ansehen
+                        </a>
+                    </div>
+                </div>
+
+                <div class="community-panel reveal">
+                    <div class="community-row">
+                        <div class="community-row-icon">1</div>
+                        <div>
+                            <strong>Ideen einbringen</strong>
+                            <span>Welche Funktionen fehlen? Teile deine Ideen direkt mit dem Projekt.</span>
+                        </div>
+                    </div>
+
+                    <div class="community-row">
+                        <div class="community-row-icon">2</div>
+                        <div>
+                            <strong>Entwicklung verfolgen</strong>
+                            <span>Erhalte Einblicke in neue Features und den aktuellen Stand von VEYRO.</span>
+                        </div>
+                    </div>
+
+                    <div class="community-row">
+                        <div class="community-row-icon">3</div>
+                        <div>
+                            <strong>Feedback geben</strong>
+                            <span>Teste Konzepte, diskutiere Änderungen und hilf dabei, VEYRO besser zu machen.</span>
+                        </div>
+                    </div>
+
+                    <div class="community-row">
+                        <div class="community-row-icon">4</div>
+                        <div>
+                            <strong>Andere Spieler kennenlernen</strong>
+                            <span>Vernetze dich mit Menschen, die genauso viel Spaß an Leitstellen & Einsatzsimulation haben.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ENTWICKLUNGSSTATUS -->
+        <section class="status-section" id="status">
+            <div class="container">
+                <div class="status-card reveal">
+                    <div>
+                        <div class="status-label">Aktueller Status</div>
+                        <h3>VEYRO befindet sich in Entwicklung.</h3>
+                        <p>
+                            Viele Dinge sind noch im Aufbau. Features können sich verändern,
+                            neue Ideen kommen dazu und nicht alles ist bereits final.
+                            Genau diese Phase wollen wir gemeinsam mit der Community gestalten.
+                        </p>
+                    </div>
+
+                    <a class="primary-button" href="https://discord.gg/DEIN-SERVER" target="_blank" rel="noopener">
+                        Entwicklung verfolgen →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUOTE / CTA -->
+        <section class="cta">
+            <div class="container cta-inner reveal">
+                <div class="quote-mark">“</div>
+                <h2>Die nächste Generation deiner Leitstelle beginnt hier.</h2>
+                <p>
+                    VEYRO ist noch nicht fertig. Aber genau das macht den Moment spannend:
+                    Werde Teil der Community und erlebe, wie aus einer Idee ein Spiel wird.
+                </p>
+
+                <div class="cta-actions">
+                    <a class="primary-button" href="https://discord.gg/DEIN-SERVER" target="_blank" rel="noopener">
+                        Discord beitreten →
+                    </a>
+                    <a class="secondary-button" href="https://instagram.com/DEIN-ACCOUNT" target="_blank" rel="noopener">
+                        Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img class="brand-logo" src="assets/veyro-logo.png" alt="VEYRO Logo"
+                     onerror="this.style.display='none';">
+                VEYRO
+            </div>
+
+            <div>Community Project · In Entwicklung</div>
+
+            <div class="footer-links">
+                <a href="https://discord.gg/DEIN-SERVER" target="_blank" rel="noopener">Discord</a>
+                <a href="https://instagram.com/DEIN-ACCOUNT" target="_blank" rel="noopener">Instagram</a>
+                <a href="#start">Nach oben ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation beim Scrollen
+        const navbar = document.getElementById("navbar");
+
+        function updateNavbar() {
+            navbar.classList.toggle("scrolled", window.scrollY > 20);
+        }
+
+        window.addEventListener("scroll", updateNavbar, { passive: true });
+        updateNavbar();
+
+        // Mobile Navigation
+        const navToggle = document.getElementById("navToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        navToggle.addEventListener("click", () => {
+            const open = navLinks.classList.toggle("open");
+            navToggle.setAttribute("aria-expanded", String(open));
+            navToggle.textContent = open ? "×" : "☰";
+        });
+
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("open");
+                navToggle.setAttribute("aria-expanded", "false");
+                navToggle.textContent = "☰";
+            });
+        });
+
+        // Scroll-Reveal
+        const revealElements = document.querySelectorAll(".reveal");
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12
+        });
+
+        revealElements.forEach(element => revealObserver.observe(element));
+
+        // Kleine Parallax-Bewegung der Dashboard-Vorschau
+        const dashboard = document.querySelector(".dashboard");
+
+        if (dashboard && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            const dashboardWrap = document.querySelector(".dashboard-wrap");
+
+            dashboardWrap.addEventListener("mousemove", (event) => {
+                if (window.innerWidth <= 900) return;
+
+                const rect = dashboardWrap.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+                dashboard.style.transform =
+                    `rotateY(${x * 7}deg) rotateX(${y * -4}deg)`;
+            });
+
+            dashboardWrap.addEventListener("mouseleave", () => {
+                dashboard.style.transform = "rotateY(-5deg) rotateX(2deg)";
+            });
+        }
+    </script>
+</body>
+</html>
