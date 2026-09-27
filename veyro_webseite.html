@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VEYRO – ein Community-Projekt rund um ein modernes Leitstellenspiel. Noch in Entwicklung. Werde Teil der Community.">
+    <meta name="theme-color" content="#d9232e">
+    <title>VEYRO – Dein Einsatz. Deine Leitstelle.</title>
+
+    <link rel="stylesheet" href="style.css">
+
+<link rel="manifest" href="./manifest.json">
+
+<meta name="theme-color" content="#111111">
+
+<link rel="icon" href="./icons/icon-192.png">
+
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="#start" aria-label="VEYRO Startseite">
+                <!-- Lege dein Logo als assets/veyro-logo.png ab -->
+                <img class="brand-logo" src="assets/veyro-logo.png" alt="VEYRO Logo"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+                <span class="brand-logo brand-fallback" style="display:none;">V</span>
+                <span class="brand-name">VEYRO</span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#idee">Die Idee</a>
+                <a href="#features">Features</a>
+                <a href="#community">Community</a>
+                <a href="#status">Entwicklung</a>
+                <a class="nav-discord" href="https://discord.gg/TcWwrp8ya" target="_blank" rel="noopener">Discord</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="start">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="reveal">
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Community-Projekt · In Entwicklung
+                    </div>
+
+                    <h1>Deine Leitstelle.<br><span>Dein Einsatz.</span></h1>
+
+                    <p class="hero-text">
+                        VEYRO ist ein modernes Leitstellenspiel, das gemeinsam mit einer
+                        Community entsteht. Baue deine Wachen auf, verwalte Fahrzeuge,
+                        bearbeite Detaillierte Einsatzlagen und triff die richtigen Entscheidungen – direkt
+                        aus deiner Leitstelle.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="primary-button" href="https://discord.gg/TcWwrp8ya" target="_blank" rel="noopener">
+                            Discord beitreten <span>→</span>
+                        </a>
+                        <a class="secondary-button" href="#idee">
+                            VEYRO entdecken
+                        </a>
+                    </div>
+
+                    <div class="hero-note">
+                        <span>●</span>
+                        Noch nicht veröffentlicht – Entwicklung läuft
+                    </div>
+                </div>
+
+                <!-- Visuelle Spielvorschau -->
+                <div class="dashboard-wrap reveal">
+                    <div class="dashboard">
+                        <div class="dashboard-top">
+                            <div class="dashboard-title">
+                                <div class="mini-icon">V</div>
+                                VEYRO Leitstelle
+                            </div>
+                            <div class="online"><i></i> System bereit</div>
+                        </div>
+
+                        <div class="map">
+                            <div class="map-road road-1"></div>
+                            <div class="map-road road-2"></div>
+                            <div class="map-road road-3"></div>
+
+                            <div class="map-marker fire m1">FW</div>
+                            <div class="map-marker rescue m2">RD</div>
+                            <div class="map-marker fire m3">FW</div>
+                            <div class="map-marker rescue m4">RD</div>
+                            <div class="incident">!</div>
+                        </div>
+
+                        <div class="dashboard-bottom">
+                            <div class="dash-card">
+                                <small>Aktueller Einsatz</small>
+                                <strong>Verkehrsunfall</strong>
+                            </div>
+                            <div class="dash-card">
+                                <small>Alarmierte Einheiten</small>
+                                <strong>LF 20 · RTW · NEF</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section class="product-showcase section" id="einblicke">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">EINBLICKE IN VEYRO</span>
+      <h2>Die Tiefe steckt im Detail.</h2>
+      <p>Die Oberfläche soll nicht nur gut aussehen. Sie soll sichtbar machen, was einen Einsatz wirklich ausmacht: Lage, Fahrzeuge und konkrete Maßnahmen.</p>
+    </div>
+
+    <div class="control-preview reveal">
+      <div class="control-map">
+        <div class="map-grid"></div>
+        <div class="map-road road-1"></div>
+        <div class="map-road road-2"></div>
+        <div class="map-block block-1"></div>
+        <div class="map-block block-2"></div>
+        <div class="map-block block-3"></div>
+
+        <div class="station station-a"><b>FW</b><span>Wache Nord</span></div>
+        <div class="station station-b"><b>FW</b><span>Wache Süd</span></div>
+        <div class="station station-c"><b>RW</b><span>Rettungswache</span></div>
+
+        <div class="map-incident">
+          <span>!</span>
+          <strong>Heckenbrand</strong>
+          <small>0.76 km</small>
+        </div>
+
+        <div class="map-caption">
+          <span>LEITSTELLE</span>
+          <strong>Einsatzübersicht</strong>
+        </div>
+      </div>
+
+      <div class="control-window">
+        <div class="window-head">
+          <div class="window-icon">!</div>
+          <div>
+            <span>EINSATZ</span>
+            <h3>Mülleimerbrand</h3>
+            <p>Einsatz wartet auf Alarmierung.</p>
+          </div>
+          <button aria-label="Fenster schließen">×</button>
+        </div>
+
+        <div class="window-tabs">
+          <b>◉ &nbsp; Übersicht</b>
+          <span>▣ &nbsp; Fahrzeuge</span>
+          <span>♧ &nbsp; Maßnahmen</span>
+        </div>
+
+        <div class="window-body">
+          <div class="window-section-title">Lage</div>
+          <p>Mülleimerbrand. Ein Löschfahrzeug wird zur Brandbekämpfung benötigt.</p>
+
+          <div class="mini-stats">
+            <div><small>ENTFERNUNG</small><strong>0.76 km</strong></div>
+            <div><small>EINSATZART</small><strong>Heckenbrand</strong></div>
+            <div><small>STATUS</small><strong>Bereit</strong></div>
+          </div>
+
+          <div class="window-section-title compact">Fahrzeuge alarmieren</div>
+          <div class="vehicle-row"><i></i><strong>LF 10</strong><small>FuRW 1 – LF 10</small></div>
+          <div class="vehicle-row"><i></i><strong>ELW</strong><small>FuRW 1 – ELW</small></div>
+          <div class="vehicle-row"><i></i><strong>TLF 4000</strong><small>FuRW 1 – TLF 4000</small></div>
+          <div class="alarm-button">Alarmieren</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="screenshot-grid">
+      <article class="screen-card reveal">
+        <div class="screen-copy">
+          <span>01 · EINSATZ</span>
+          <h3>Erst die Lage. Dann die Entscheidung.</h3>
+          <p>Die Einsatzansicht zeigt nicht nur einen Einsatzpunkt. Sie gibt dir die Informationen, die du für deine erste Entscheidung brauchst.</p>
+        </div>
+        <div class="screen-frame">
+          <img src="assets/veyro-einsatz.png" alt="VEYRO Einsatzansicht mit Heckenbrand und Fahrzeugauswahl" loading="lazy">
+        </div>
+      </article>
+
+      <article class="screen-card reverse reveal">
+        <div class="screen-copy">
+          <span>02 · MASSNAHMEN</span>
+          <h3>Ein Fahrzeug kann mehr als nur ankommen.</h3>
+          <p>Vor Ort entscheidest du, welche konkrete Maßnahme durchgeführt wird – und bei manchen Maßnahmen sogar, welches Verfahren zum Einsatz kommt.</p>
+        </div>
+        <div class="screen-frame">
+          <img src="assets/veyro-massnahmen.png" alt="VEYRO Maßnahmenansicht des LF 20 mit verschiedenen Löschverfahren" loading="lazy">
+        </div>
+      </article>
+
+      <article class="screen-card reveal">
+        <div class="screen-copy">
+          <span>03 · FAHRZEUGSTEUERUNG</span>
+          <h3>Details, die Entscheidungen möglich machen.</h3>
+          <p>Wassertank, Ausstattung und verfügbare Maßnahmen sind Teil des Fahrzeugs – nicht nur dekorative Informationen.</p>
+        </div>
+        <div class="screen-frame">
+          <img src="assets/veyro-fahrzeug.png" alt="VEYRO Fahrzeugsteuerung des LF 20" loading="lazy">
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+        <!-- IDEE -->
+        <section class="white-section" id="idee">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-kicker">Die Idee hinter VEYRO</span>
+                    <h2>Ein Leitstellenspiel, das mit seiner Community wächst.</h2>
+                    <p>
+                        VEYRO soll nicht einfach nur ein weiteres Spiel sein. Die Idee ist,
+                        eine Plattform zu schaffen, bei der Spieler, Entwickler und
+                        Interessierte gemeinsam an einer modernen Leitstellen-Erfahrung
+                        arbeiten.
+                    </p>
+                </div>
+
+                <div class="feature-grid" id="features">
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">⌖</div>
+                        <h3>Deine Leitstelle</h3>
+                        <p>
+                            Übernimm die Kontrolle und koordiniere Detaillierte Einsatzlagen aus einer
+                            übersichtlichen, modernen Leitstellen-Oberfläche.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">⚠</div>
+                        <h3>Realistische Detaillierte Einsatzlagen</h3>
+                        <p>
+                            Von alltäglichen Notfällen bis zu größeren Einsatzlagen:
+                            Entscheidungen sollen einen echten Unterschied machen.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">▣</div>
+                        <h3>Fahrzeuge mit Fähigkeiten</h3>
+                        <p>
+                            Baue deine Infrastruktur auf, stelle Fahrzeuge bereit und
+                            entwickle deine eigene Einsatzstrategie.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">→</div>
+                        <h3>Maßnahmen & Entscheidungen</h3>
+                        <p>
+                            Alarmiere die passenden Einheiten, koordiniere Maßnahmen und
+                            behalte auch bei komplexen Lagen den Überblick.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">◎</div>
+                        <h3>Moderne Oberfläche</h3>
+                        <p>
+                            Klare Informationen, wenig Ablenkung und ein Interface, das
+                            sich anfühlt wie eine echte digitale Leitstelle.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">♥</div>
+                        <h3>Community zuerst</h3>
+                        <p>
+                            Feedback, Ideen und Diskussionen sollen ein wichtiger Teil
+                            der Entwicklung von VEYRO sein.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY -->
+        <section id="community">
+            <div class="container community-grid">
+                <div class="reveal">
+                    <div class="section-header">
+                        <span class="section-kicker">Community-Projekt</span>
+                        <h2>Nicht nur zuschauen. Mitgestalten.</h2>
+                        <p>
+                            VEYRO befindet sich noch in der Entwicklung. Genau deshalb ist
+                            jetzt der richtige Zeitpunkt, Teil der Community zu werden.
+                        </p>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a class="primary-button" href="https://discord.gg/TcWwrp8ya" target="_blank" rel="noopener">
+                            Zum Discord <span>→</span>
+                        </a>
+                        <a class="secondary-button" href="https://www.tiktok.com/@veyro.leitstelle" target="_blank" rel="noopener">
+                            Socials ansehen
+                        </a>
+                    </div>
+                </div>
+
+                <div class="community-panel reveal">
+                    <div class="community-row">
+                        <div class="community-row-icon">1</div>
+                        <div>
+                            <strong>Ideen einbringen</strong>
+                            <span>Welche Funktionen fehlen? Teile deine Ideen direkt mit dem Projekt.</span>
+                        </div>
+                    </div>
+
+                    <div class="community-row">
+                        <div class="community-row-icon">2</div>
+                        <div>
+                            <strong>Entwicklung verfolgen</strong>
+                            <span>Erhalte Einblicke in neue Features und den aktuellen Stand von VEYRO.</span>
+                        </div>
+                    </div>
+
+                    <div class="community-row">
+                        <div class="community-row-icon">3</div>
+                        <div>
+                            <strong>Feedback geben</strong>
+                            <span>Teste Konzepte, diskutiere Änderungen und hilf dabei, VEYRO besser zu machen.</span>
+                        </div>
+                    </div>
+
+                    <div class="community-row">
+                        <div class="community-row-icon">4</div>
+                        <div>
+                            <strong>Andere Spieler kennenlernen</strong>
+                            <span>Vernetze dich mit Menschen, die genauso viel Spaß an Leitstellen & Einsatzsimulation haben.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ENTWICKLUNGSSTATUS -->
+        <section class="status-section" id="status">
+            <div class="container">
+                <div class="status-card reveal">
+                    <div>
+                        <div class="status-label">Aktueller Status</div>
+                        <h3>VEYRO befindet sich in Entwicklung.</h3>
+                        <p>
+                            Viele Dinge sind noch im Aufbau. Features können sich verändern,
+                            neue Ideen kommen dazu und nicht alles ist bereits final.
+                            Genau diese Phase wollen wir gemeinsam mit der Community gestalten.
+                        </p>
+                    </div>
+
+                    <a class="primary-button" href="https://discord.gg/TcWwrp8ya" target="_blank" rel="noopener">
+                        Entwicklung verfolgen →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUOTE / CTA -->
+        <section class="cta">
+            <div class="container cta-inner reveal">
+                <div class="quote-mark">“</div>
+                <h2>Die nächste Generation deiner Leitstelle beginnt hier.</h2>
+                <p>
+                    VEYRO ist noch nicht fertig. Aber genau das macht den Moment spannend:
+                    Werde Teil der Community und erlebe, wie aus einer Idee ein Spiel wird.
+                </p>
+
+                <div class="cta-actions">
+                    <a class="primary-button" href="https://discord.gg/TcWwrp8ya" target="_blank" rel="noopener">
+                        Discord beitreten →
+                    </a>
+                    <a class="secondary-button" href="https://www.tiktok.com/@veyro.leitstelle" target="_blank" rel="noopener">
+                        Tiktok
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img class="brand-logo" src="assets/veyro-logo.png" alt="VEYRO Logo"
+                     onerror="this.style.display='none';">
+                VEYRO
+            </div>
+
+            <div>Community Project · In Entwicklung</div>
+
+            <div class="footer-links">
+                <a href="https://discord.gg/TcWwrp8ya" target="_blank" rel="noopener">Discord</a>
+                <a href="https://www.tiktok.com/@veyro.leitstelle" target="_blank" rel="noopener">Tiktok</a>
+                <a href="#start">Nach oben ↑</a>
+            </div>
+        </div>
+    </footer>
+ 
+
+        <script
+        src="script.js"
+    ></script>
+
+    <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .then(() => console.log("Service Worker registriert"))
+        .catch(err => console.error("Service Worker Fehler:", err));
+    });
+  }
+</script>
+</body>
+</html>
